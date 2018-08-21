@@ -37,7 +37,13 @@ function buildTableFromResults(results) {
           };
           teams[match.team1.key] = team1;
         } else {
-          
+          team1.wins = match.score1 > match.score2 ? team1.wins + 1 : team1.wins;
+          team1.draws = match.score1 === match.score2 ? team1.draws + 1 : team1.draws;
+          team1.loses = match.score1 < match.score2 ? team1.loses + 1 : team1.loses;
+          team1.goals_for = team1.goals_for + match.score1;
+          team1.goals_against = team1.goals_against + match.score2;
+          team1.goal_difference = team1.goal_difference + (match.score1 - match.score2);
+          team1.points = match.score1 === match.score2 ? team1.points + 1 : match.score1 > match.score2 ? team1.points + 3 : team1.points;
         }
 
         let team2 = teams[match.team2.key];
@@ -54,14 +60,21 @@ function buildTableFromResults(results) {
             goal_difference: match.score2 - match.score1,
             points: match.score1 === match.score2 ? 1 : match.score2 > match.score1 ? 3 : 0
           }
+          teams[match.team2.key] = team2;
+        } else {
+          team2.wins = match.score2 > match.score1 ? team2.wins + 1 : team2.wins;
+          team2.draws = match.score2 === match.score1 ? team2.draws + 1 : team2.draws;
+          team2.loses = match.score2 < match.score1 ? team2.loses + 1 : team2.loses;
+          team2.goals_for = team2.goals_for + match.score2;
+          team2.goals_against = team2.goals_against + match.score1;
+          team2.goal_difference = team2.goal_difference + (match.score2 - match.score1);
+          team2.points = match.score2 === match.score1 ? team2.points + 1 : match.score2 > match.score1 ? team2.points + 3 : team2.points;
         }
       }
     )
   )
-
+  console.log(teams);
   return sortTableOrder(teams);
 }
 
 const results = buildTableFromResults(mockData);
-
-console.log(results);

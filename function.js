@@ -14,8 +14,11 @@ function addTeamToTable(match, team) {
     goals_for: team === 1 ? match.score1 : match.score2,
     goals_against: team === 1 ? match.score2 : match.score1,
     goal_difference: team === 1 ? match.score1 - match.score2 : match.score2 - match.score1,
-    points: match.score1 === match.score2 ? 1 : 
-      (match.score1 > match.score2 && team === 1) || (match.score1 < match.score2 && team === 2) ? 3 : 0
+    points: match.score1 !== match.score2 ?
+      (match.score1 > match.score2 && team === 1) || (match.score1 < match.score2 && team === 2) ?
+        3 :
+          0 :
+            1
   });
 }
 
@@ -74,8 +77,9 @@ function buildTableFromResults(results) {
 
   sortTable();
   addRankToTable();
-  console.log(teams);
-  return teams;
+  const finalTable = JSON.stringify(Object.assign({}, teams));
+  console.log(finalTable);
+  return finalTable;
 }
 
 buildTableFromResults(data);

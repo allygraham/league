@@ -21,9 +21,9 @@ function addTeamToTable(match, team) {
 
 function updateTeam(match, teamKey, team) {
   const teamToUpdate = teams.findIndex((team => team.key === teamKey));
-  teams[teamToUpdate].wins = match.score1 > match.score2 && team === 1 ? teams[teamToUpdate].wins + 1 : teams[teamToUpdate].wins;
+  teams[teamToUpdate].wins = (match.score1 > match.score2 && team === 1) || (match.score1 < match.score2 && team === 2) ? teams[teamToUpdate].wins + 1 : teams[teamToUpdate].wins;
   teams[teamToUpdate].draws = match.score1 === match.score2 ? teams[teamToUpdate].draws + 1 : teams[teamToUpdate].draws;
-  teams[teamToUpdate].loses = match.score1 < match.score2 && team === 1 ? teams[teamToUpdate].loses + 1 : teams[teamToUpdate].loses;
+  teams[teamToUpdate].loses = (match.score1 < match.score2 && team === 1) || (match.score1 > match.score2 && team === 2) ? teams[teamToUpdate].loses + 1 : teams[teamToUpdate].loses;
   teams[teamToUpdate].goals_for = team === 1 ? teams[teamToUpdate].goals_for + match.score1 : teams[teamToUpdate].goals_for + match.score2;
   teams[teamToUpdate].goals_against = team === 1 ?
     teams[teamToUpdate].goals_against + match.score2 : teams[teamToUpdate].goals_against + match.score1;

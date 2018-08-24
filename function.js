@@ -17,6 +17,8 @@ function addTeamToTable(match, team) {
   const awayTeam = match.team2;
   const isHomeTeam = team === constants.teams.one;
   const homeTeamWon = match.score1 > match.score2;
+  const didTeamWin = (homeTeamWon && isHomeTeam) || (!homeTeamWon && !isHomeTeam);
+  const didTeamDraw = match.score1 === match.score2;
 
   teams.push({
     key: isHomeTeam ? homeTeam.key : awayTeam.key,
@@ -28,8 +30,8 @@ function addTeamToTable(match, team) {
     goals_for: isHomeTeam ? match.score1 : match.score2,
     goals_against: isHomeTeam ? match.score2 : match.score1,
     goal_difference: isHomeTeam ? match.score1 - match.score2 : match.score2 - match.score1,
-    points: match.score1 !== match.score2 ?
-      (homeTeamWon && isHomeTeam) || (!homeTeamWon && !isHomeTeam) ?
+    points: !didTeamDraw ?
+      didTeamWin ?
         constants.points.win :
           constants.points.lose :
             constants.points.draw
@@ -46,17 +48,30 @@ function updateTeamInTable(match, teamKey, team) {
   const teamToUpdate = teams[indexOfTeamToUpdate(teamKey)];
   const isHomeTeam = team === constants.teams.one;
   const homeTeamWon = match.score1 > match.score2;
+  const didTeamWin = (homeTeamWon && isHomeTeam) || (!homeTeamWon && !isHomeTeam);
+  const didTeamLose = (!homeTeamWon && isHomeTeam) || (homeTeamWon && !isHomeTeam);
+  const didTeamDraw = match.score1 === match.score2;
 
-  teamToUpdate.wins = (homeTeamWon && isHomeTeam) || (!homeTeamWon && !isHomeTeam) ? teamToUpdate.wins + 1 : teamToUpdate.wins;
-  teamToUpdate.draws = match.score1 === match.score2 ? teamToUpdate.draws + 1 : teamToUpdate.draws;
-  teamToUpdate.loses = (!homeTeamWon && isHomeTeam) || (homeTeamWon && !isHomeTeam) ? teamToUpdate.loses + 1 : teamToUpdate.loses;
-  teamToUpdate.goals_for = isHomeTeam ? teamToUpdate.goals_for + match.score1 : teamToUpdate.goals_for + match.score2;
+  teamToUpdate.wins = didTeamWin ?
+    teamToUpdate.wins + 1 :
+      teamToUpdate.wins;
+  teamToUpdate.draws = didTeamDraw ?
+    teamToUpdate.draws + 1 :
+      teamToUpdate.draws;
+  teamToUpdate.loses = didTeamLose ?
+    teamToUpdate.loses + 1 :
+      teamToUpdate.loses;
+  teamToUpdate.goals_for = isHomeTeam ?
+    teamToUpdate.goals_for + match.score1 :
+      teamToUpdate.goals_for + match.score2;
   teamToUpdate.goals_against = isHomeTeam ?
-    teamToUpdate.goals_against + match.score2 : teamToUpdate.goals_against + match.score1;
+    teamToUpdate.goals_against + match.score2 :
+      teamToUpdate.goals_against + match.score1;
   teamToUpdate.goal_difference = isHomeTeam ?
-    teamToUpdate.goal_difference + (match.score1 - match.score2) : teamToUpdate.goal_difference + (match.score2 - match.score1);
-  teamToUpdate.points = match.score1 !== match.score2 ?
-    (homeTeamWon && isHomeTeam) || (!homeTeamWon && !isHomeTeam) ?
+    teamToUpdate.goal_difference + (match.score1 - match.score2) :
+      teamToUpdate.goal_difference + (match.score2 - match.score1);
+  teamToUpdate.points = !didTeamDraw ?
+    didTeamWin ?
       teamToUpdate.points + constants.points.win :
         teamToUpdate.points :
           teamToUpdate.points + constants.points.draw;
@@ -122,9 +137,9 @@ function buildTableFromResults(results) {
 
   sortTableIntoOrder();
   addRankToTable();
-  const finalTable = JSON.stringify(teams);
-  console.log(finalTable);
-  return finalTable;
+  return JSON.stringify(teams);
 }
 
-buildTableFromResults(data);
+const leagueStandings = buildTableFromResults(data);
+
+console.log(leagueStandings);

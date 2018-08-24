@@ -9,21 +9,19 @@ The purpose of this script:
 
 ## Tests
 
-This script is unit tested with Mocha. To install Mocha on your machine, open a terminal and type:
+This script is unit tested with Jest. To install it on your machine, open a terminal and type:
 
 ```
-npm install mocha -g --save-dev
+npm install --save-dev jest
 ```
-
-More info: [http://mochajs.org/#installation](http://mochajs.org/#installation)
 
 
 ### Run tests
 
-Type __mocha__ to get the tests running.
+Type __npm test__ to get the tests running.
 
 ```
-mocha
+npm test
 ```
 
 
@@ -31,4 +29,4 @@ mocha
 
 * Document code/add comments where applicable
 * Simplfy functions further to make more readable
-* Add unit tests for the remaining functions
+* Add more unit tests for full coverage across the functions

@@ -40,14 +40,14 @@ const addTeamToTable = (match, team) => {
   });
 }
 
-const indexOfTeamToUpdate = teamKey => {
+const indexOfTeamToUpdate = (teams, teamKey) => {
   return teams.findIndex(
     team => team.key === teamKey
   );
 }
 
 const updateTeamInTable = (match, teamKey, team) => {
-  const teamToUpdate = teams[indexOfTeamToUpdate(teamKey)];
+  const teamToUpdate = teams[indexOfTeamToUpdate(teams, teamKey)];
   const isHomeTeam = team === constants.teams.one;
   const homeTeamWon = match.score1 > match.score2;
   const didTeamWin = (homeTeamWon && isHomeTeam) || (!homeTeamWon && !isHomeTeam);
@@ -105,18 +105,17 @@ const sortOnPoints = (a, b) => {
   return b.points - a.points;
 }
 
-const sortTableIntoOrder = () => {
+const sortTableIntoOrder = teams => {
   teams.sort((a, b) => {
-    const sort = haveEqualPoints(a, b) ?
+    return haveEqualPoints(a, b) ?
       haveEqualGoalDifference(a, b) ?
         sortOnGoalsFor(a, b) :
           sortOnGoalDifference(a, b) :
             sortOnPoints(a, b);
-    return sort;
   });
 }
 
-const addRankToTable = () => {
+const addRankToTable = teams => {
   teams.map(
     (team, index) => team.rank = index + 1
   );
@@ -143,12 +142,13 @@ const buildTableFromResults = results => {
     )
   )
 
-  sortTableIntoOrder();
-  addRankToTable();
+  sortTableIntoOrder(teams);
+  addRankToTable(teams);
   return JSON.stringify(teams);
 }
 
 const leagueStandings = buildTableFromResults(data);
+
 module.exports = {
   addTeamToTable,
   indexOfTeamToUpdate,
@@ -162,4 +162,5 @@ module.exports = {
   addRankToTable,
   buildTableFromResults
 };
+
 console.log(leagueStandings); // Used to view output

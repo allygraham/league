@@ -1,5 +1,4 @@
 var assert = require("assert");
-var data = require('./mock.json');
 var A = require('./functions.js');
 
 describe('Functions.js', function(){

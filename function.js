@@ -56,17 +56,23 @@ function addRankToTable() {
   );
 }
 
+function findTeamByKey(teamKey) {
+  return teams.filter(
+    team => team.key === teamKey
+  ).length === 0;
+}
+
 function buildTableFromResults(results) {
   results.rounds.forEach(
     round => round.matches.forEach(
       match => {
-        if (teams.filter(team => (team.key === match.team1.key)).length === 0) {
+        if (findTeamByKey(match.team1.key)) {
           addTeamToTable(match, 1);
         } else {
           updateTeam(match, match.team1.key, 1);
         }
 
-        if (teams.filter(team => (team.key === match.team2.key)).length === 0) {
+        if (findTeamByKey(match.team2.key)) {
           addTeamToTable(match, 2);
         } else {
           updateTeam(match, match.team2.key, 2);
@@ -77,7 +83,7 @@ function buildTableFromResults(results) {
 
   sortTable();
   addRankToTable();
-  const finalTable = JSON.stringify(Object.assign({}, teams));
+  const finalTable = JSON.stringify(teams);
   console.log(finalTable);
   return finalTable;
 }

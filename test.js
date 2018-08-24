@@ -1,8 +1,8 @@
 var assert = require("assert");
 var A = require('./functions.js');
 
-describe('Function.js', function(){
-  describe('Array Split', function(){
+describe('Functions.js', function(){
+  describe('League', function(){
     it('is a function', function() { 
       assert(typeof A.arraySplit === 'function');
     })

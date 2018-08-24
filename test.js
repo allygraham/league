@@ -1,10 +1,11 @@
 var assert = require("assert");
+var data = require('./mock.json');
 var A = require('./functions.js');
 
 describe('Functions.js', function(){
-  describe('League', function(){
+  describe('addTeamToTable', function(){
     it('is a function', function() { 
-      assert(typeof A.arraySplit === 'function');
+      assert(typeof A.addTeamToTable === 'function');
     })
     it('should take [] and 0 to return []', function(){
       assert.deepEqual(A.arraySplit([],0), []);

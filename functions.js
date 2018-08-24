@@ -12,7 +12,7 @@ const constants = {
   }
 }
 
-function addTeamToTable(match, team) {
+const addTeamToTable = (match, team) => {
   const homeTeam = match.team1;
   const awayTeam = match.team2;
   const isHomeTeam = team === constants.teams.one;
@@ -40,13 +40,13 @@ function addTeamToTable(match, team) {
   });
 }
 
-function indexOfTeamToUpdate(teamKey) {
+const indexOfTeamToUpdate = teamKey => {
   return teams.findIndex(
     team => team.key === teamKey
   );
 }
 
-function updateTeamInTable(match, teamKey, team) {
+const updateTeamInTable = (match, teamKey, team) => {
   const teamToUpdate = teams[indexOfTeamToUpdate(teamKey)];
   const isHomeTeam = team === constants.teams.one;
   const homeTeamWon = match.score1 > match.score2;
@@ -85,27 +85,27 @@ function updateTeamInTable(match, teamKey, team) {
           teamToUpdate.points + constants.points.draw;
 }
 
-function haveEqualPoints(a, b) {
+const haveEqualPoints = (a, b) => {
   return a.points === b.points;
 }
 
-function haveEqualGoalDifference(a, b) {
+const haveEqualGoalDifference = (a, b) => {
   return a.goal_difference === b.goal_difference;
 }
 
-function sortOnGoalsFor(a, b) {
+const sortOnGoalsFor = (a, b) => {
   return b.goals_for - a.goals_for;
 }
 
-function sortOnGoalDifference(a, b) {
+const sortOnGoalDifference = (a, b) => {
   return b.goal_difference - a.goal_difference;
 }
 
-function sortOnPoints(a, b) {
+const sortOnPoints = (a, b) => {
   return b.points - a.points;
 }
 
-function sortTableIntoOrder() {
+const sortTableIntoOrder = () => {
   teams.sort((a, b) => {
     const sort = haveEqualPoints(a, b) ?
       haveEqualGoalDifference(a, b) ?
@@ -116,19 +116,19 @@ function sortTableIntoOrder() {
   });
 }
 
-function addRankToTable() {
+const addRankToTable = () => {
   teams.map(
     (team, index) => team.rank = index + 1
   );
 }
 
-function findTeamByKey(teamKey) {
+const findTeamByKey = teamKey => {
   return teams.filter(
     team => team.key === teamKey
   ).length === 0;
 }
 
-function buildTableFromResults(results) {
+const buildTableFromResults = results => {
   results.rounds.forEach(
     round => round.matches.forEach(
       match => {
@@ -149,5 +149,17 @@ function buildTableFromResults(results) {
 }
 
 const leagueStandings = buildTableFromResults(data);
-
+module.exports = {
+  addTeamToTable,
+  indexOfTeamToUpdate,
+  updateTeamInTable,
+  haveEqualPoints,
+  haveEqualGoalDifference,
+  sortOnGoalsFor,
+  sortOnGoalDifference,
+  sortOnPoints,
+  sortTableIntoOrder,
+  addRankToTable,
+  buildTableFromResults
+};
 console.log(leagueStandings); // Used to view output

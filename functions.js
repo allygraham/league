@@ -144,18 +144,4 @@ function buildTableFromResults(results) {
 
 const leagueStandings = buildTableFromResults(data);
 
-export {
-  addTeamToTable,
-  indexOfTeamToUpdate,
-  updateTeamInTable,
-  haveEqualPoints,
-  haveEqualGoalDifference,
-  sortOnGoalsFor,
-  sortOnGoalDifference,
-  sortOnPoints,
-  sortTableIntoOrder,
-  addRankToTable,
-  findTeamByKey,
-  buildTableFromResults };
-
 console.log(leagueStandings); // Used to view output

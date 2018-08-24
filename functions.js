@@ -57,21 +57,27 @@ function updateTeamInTable(match, teamKey, team) {
   teamToUpdate.wins = didTeamWin ?
     teamToUpdate.wins + 1 :
       teamToUpdate.wins;
+
   teamToUpdate.draws = didTeamDraw ?
     teamToUpdate.draws + 1 :
       teamToUpdate.draws;
+
   teamToUpdate.loses = didTeamLose ?
     teamToUpdate.loses + 1 :
       teamToUpdate.loses;
+
   teamToUpdate.goals_for = isHomeTeam ?
     teamToUpdate.goals_for + match.score1 :
       teamToUpdate.goals_for + match.score2;
+
   teamToUpdate.goals_against = isHomeTeam ?
     teamToUpdate.goals_against + match.score2 :
       teamToUpdate.goals_against + match.score1;
+
   teamToUpdate.goal_difference = isHomeTeam ?
     teamToUpdate.goal_difference + (match.score1 - match.score2) :
       teamToUpdate.goal_difference + (match.score2 - match.score1);
+      
   teamToUpdate.points = !didTeamDraw ?
     didTeamWin ?
       teamToUpdate.points + constants.points.win :

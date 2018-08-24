@@ -29,7 +29,9 @@ function addTeamToTable(match, team) {
     loses: !homeTeamWon && isHomeTeam ? 1 : 0,
     goals_for: isHomeTeam ? match.score1 : match.score2,
     goals_against: isHomeTeam ? match.score2 : match.score1,
-    goal_difference: isHomeTeam ? match.score1 - match.score2 : match.score2 - match.score1,
+    goal_difference: isHomeTeam ?
+      match.score1 - match.score2 :
+        match.score2 - match.score1,
     points: !didTeamDraw ?
       didTeamWin ?
         constants.points.win :
@@ -142,4 +144,18 @@ function buildTableFromResults(results) {
 
 const leagueStandings = buildTableFromResults(data);
 
-console.log(leagueStandings);
+export {
+  addTeamToTable,
+  indexOfTeamToUpdate,
+  updateTeamInTable,
+  haveEqualPoints,
+  haveEqualGoalDifference,
+  sortOnGoalsFor,
+  sortOnGoalDifference,
+  sortOnPoints,
+  sortTableIntoOrder,
+  addRankToTable,
+  findTeamByKey,
+  buildTableFromResults };
+
+console.log(leagueStandings); // Used to view output

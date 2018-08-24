@@ -1,7 +1,5 @@
 const data = require('./en.1.json');
-
 const teams = [];
-
 const constants = {
   points: {
     win: 3,
@@ -39,7 +37,9 @@ function addTeamToTable(match, team) {
 }
 
 function indexOfTeamToUpdate(teamKey) {
-  return teams.findIndex((team => team.key === teamKey));
+  return teams.findIndex(
+    team => team.key === teamKey
+  );
 }
 
 function updateTeamInTable(match, teamKey, team) {

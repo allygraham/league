@@ -15,7 +15,7 @@ const constants = {
 function addTeamToTable(match, team) {
   const homeTeam = match.team1;
   const awayTeam = match.team2;
-  const isHomeTeam = team === constants.team.one;
+  const isHomeTeam = team === constants.teams.one;
   const homeTeamWon = match.score1 > match.score2;
 
   teams.push({
@@ -44,7 +44,7 @@ function indexOfTeamToUpdate(teamKey) {
 
 function updateTeamInTable(match, teamKey, team) {
   const teamToUpdate = teams[indexOfTeamToUpdate(teamKey)];
-  const isHomeTeam = team === constants.team.one;
+  const isHomeTeam = team === constants.teams.one;
   const homeTeamWon = match.score1 > match.score2;
 
   teamToUpdate.wins = (homeTeamWon && isHomeTeam) || (!homeTeamWon && !isHomeTeam) ? teamToUpdate.wins + 1 : teamToUpdate.wins;
@@ -110,12 +110,12 @@ function buildTableFromResults(results) {
     round => round.matches.forEach(
       match => {
         findTeamByKey(match.team1.key) ?
-          addTeamToTable(match, constants.team.one) :
-            updateTeamInTable(match, match.team1.key, constants.team.one);
+          addTeamToTable(match, constants.teams.one) :
+            updateTeamInTable(match, match.team1.key, constants.teams.one);
 
         findTeamByKey(match.team2.key) ?
-          addTeamToTable(match, constants.team.two) :
-            updateTeamInTable(match, match.team2.key, constants.team.two);
+          addTeamToTable(match, constants.teams.two) :
+            updateTeamInTable(match, match.team2.key, constants.teams.two);
       }
     )
   )

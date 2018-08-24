@@ -7,7 +7,7 @@ The purpose of this script:
 
 
 
-## Install Mocha
+## Tests
 
 This script is unit tested with Mocha. To install Mocha on your machine, open a terminal and type:
 
@@ -18,9 +18,9 @@ npm install mocha -g --save-dev
 More info: [http://mochajs.org/#installation](http://mochajs.org/#installation)
 
 
-## Run tests
+### Run tests
 
-By typing the command __mocha__ in your terminal while in the project folder, the tests will run.
+Type __mocha__ to get the tests running.
 
 ```
 mocha
